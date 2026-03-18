@@ -8,20 +8,11 @@
 <title>VAULT</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Oxanium:wght@800&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 input,textarea{-webkit-user-select:text;user-select:text;}
 html,body{height:100%;background:#000;overflow:hidden;font-family:'Share Tech Mono',monospace;}
 
-#shield{position:fixed;inset:0;background:#000;z-index:9999;display:none;align-items:center;justify-content:center;flex-direction:column;gap:10px;}
-#shield.on{display:flex;}
-#shield p{font-size:9px;letter-spacing:4px;color:#0a0a0a;text-transform:uppercase;}
-
-#conn{position:fixed;inset:0;background:#000;z-index:200;display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px;}
-#conn.on{display:flex;}
-.spin{width:34px;height:34px;border:1px solid #222;border-top-color:#00ccff;border-radius:50%;animation:sp 1s linear infinite;}
-@keyframes sp{to{transform:rotate(360deg)}}
-#conn p{font-size:9px;letter-spacing:4px;color:#005577;text-transform:uppercase;}
-
+/* LOGIN */
 #login{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;z-index:100;overflow-y:auto;}
 #login.hide{display:none;}
 .logo{font-family:'Oxanium',sans-serif;font-size:58px;font-weight:800;letter-spacing:14px;color:#fff;line-height:1;text-align:center;}
@@ -30,39 +21,46 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Share Tech Mo
 .lbl{font-size:8px;letter-spacing:4px;color:#0077aa;text-transform:uppercase;margin-bottom:5px;}
 .inp{width:100%;background:#000;border:none;border-bottom:1px solid #003344;color:#fff;font-family:'Share Tech Mono',monospace;font-size:15px;padding:12px 10px;outline:none;-webkit-appearance:none;border-radius:0;transition:border-color .2s;}
 .inp:focus{border-bottom-color:#00ccff;}
-.inp::placeholder{color:#111;}
+.inp::placeholder{color:#222;}
 .err{font-size:9px;color:#ff3355;letter-spacing:2px;text-align:center;min-height:14px;text-transform:uppercase;}
 .btn-go{width:100%;background:transparent;border:1px solid #00ccff;color:#00ccff;font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:8px;text-transform:uppercase;padding:14px;cursor:pointer;border-radius:0;transition:all .2s;margin-top:4px;}
 .btn-go:hover,.btn-go:active{background:#00ccff;color:#000;}
-.btn-go:disabled{opacity:.2;pointer-events:none;}
+.btn-go:disabled{opacity:.25;pointer-events:none;}
 .note{font-size:8px;color:#003344;letter-spacing:2px;text-align:center;margin-top:28px;line-height:2.4;text-transform:uppercase;}
 
+/* CONNECTING */
+#conn{position:fixed;inset:0;background:#000;z-index:200;display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px;}
+#conn.on{display:flex;}
+.spin{width:34px;height:34px;border:1px solid #222;border-top-color:#00ccff;border-radius:50%;animation:sp 1s linear infinite;}
+@keyframes sp{to{transform:rotate(360deg)}}
+#conn p{font-size:9px;letter-spacing:4px;color:#005577;text-transform:uppercase;}
+
+/* CHAT */
 #chat{position:fixed;inset:0;display:none;flex-direction:column;background:#000;}
 #chat.on{display:flex;}
 
 .hdr{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-bottom:1px solid #0a1a22;flex-shrink:0;}
 .hdr-l .t{font-size:10px;font-weight:700;letter-spacing:6px;color:#00ccff;text-transform:uppercase;}
 .hdr-l .r{font-size:8px;color:#0077aa;letter-spacing:2px;margin-top:2px;}
-.hdr-r{display:flex;align-items:center;gap:12px;}
+.hdr-r{display:flex;align-items:center;gap:14px;}
 
-/* connection status */
-#conn-status{display:flex;align-items:center;gap:5px;}
-#conn-dot{width:6px;height:6px;border-radius:50%;background:#555;transition:background .4s;}
+/* participants */
+.participants{display:flex;align-items:center;gap:6px;}
+.part-icon{width:14px;height:14px;opacity:.7;}
+#part-count{font-size:11px;color:#00ccff;letter-spacing:1px;font-weight:bold;min-width:10px;}
+#part-names{font-size:7px;color:#005577;letter-spacing:1px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+/* connection dot */
+#conn-dot{width:6px;height:6px;border-radius:50%;background:#555;transition:background .4s;flex-shrink:0;}
 #conn-dot.ok{background:#00ff88;box-shadow:0 0 6px #00ff88;animation:bl 2.5s infinite;}
 #conn-dot.err{background:#ff3355;}
-#conn-label{font-size:7px;letter-spacing:2px;color:#004455;text-transform:uppercase;transition:color .4s;}
-#conn-label.ok{color:#00aa55;}
-#conn-label.err{color:#ff3355;}
 @keyframes bl{0%,100%{opacity:1}50%{opacity:.3}}
 
 .btn-exit{background:none;border:1px solid #0a1a22;color:#0077aa;font-family:'Share Tech Mono',monospace;font-size:7px;letter-spacing:3px;padding:6px 12px;cursor:pointer;text-transform:uppercase;transition:all .2s;border-radius:0;}
 .btn-exit:hover{border-color:#ff3355;color:#ff3355;}
 
-.enc{display:flex;align-items:center;gap:7px;padding:5px 16px;border-bottom:1px solid #050e14;flex-shrink:0;}
-.enc-d{width:4px;height:4px;border-radius:50%;background:#00ff88;}
-.enc-t{font-size:7px;letter-spacing:3px;color:#005566;text-transform:uppercase;}
-
-#msgs{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px;display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth;}
+/* MESSAGES */
+#msgs{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth;}
 #msgs::-webkit-scrollbar{width:2px;}
 #msgs::-webkit-scrollbar-thumb{background:#002233;}
 
@@ -70,60 +68,55 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Share Tech Mo
 .empty-i{font-size:26px;opacity:.12;}
 .empty-t{font-size:8px;letter-spacing:3px;color:#003344;text-transform:uppercase;}
 
-.mw{display:flex;flex-direction:column;gap:3px;animation:mn .18s ease;}
+.mw{display:flex;flex-direction:column;gap:3px;animation:mn .15s ease;}
 @keyframes mn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 .mw.me{align-items:flex-end;}
 .mw.them{align-items:flex-start;}
+
 .meta{font-size:8px;letter-spacing:2px;color:#0088bb;text-transform:uppercase;}
 .mtime{color:#005577;}
 
 .mw.me .mb{
-  max-width:82%;padding:10px 14px;font-family:'Share Tech Mono',monospace;
-  font-size:13px;line-height:1.6;word-break:break-word;
-  background:#003355;border:1px solid #0066aa;color:#ffffff;
-  border-radius:2px 0 2px 2px;
+  max-width:82%;padding:10px 14px;
+  font-size:14px;line-height:1.6;word-break:break-word;
+  background:#003355;border:1px solid #0066aa;
+  color:#ffffff;border-radius:2px 0 2px 2px;
 }
 .mw.them .mb{
-  max-width:82%;padding:10px 14px;font-family:'Share Tech Mono',monospace;
-  font-size:13px;line-height:1.6;word-break:break-word;
-  background:#060f18;border:1px solid #0a2030;color:#ffffff;
-  border-radius:0 2px 2px 2px;
+  max-width:82%;padding:10px 14px;
+  font-size:14px;line-height:1.6;word-break:break-word;
+  background:#060f18;border:1px solid #0a2030;
+  color:#ffffff;border-radius:0 2px 2px 2px;
 }
 
-/* sending state */
-.mw.sending .mb{opacity:.5;}
-
+/* INPUT */
 .ch-in{display:flex;align-items:flex-end;gap:10px;padding:12px 16px;border-top:1px solid #0a1a22;flex-shrink:0;background:#000;}
-#mi{flex:1;background:#000;border:none;border-bottom:1px solid #003344;color:#fff;font-family:'Share Tech Mono',monospace;font-size:14px;padding:11px 12px;outline:none;resize:none;max-height:110px;min-height:42px;line-height:1.45;transition:border-color .2s;border-radius:0;}
+#mi{flex:1;background:#060f18;border:none;border-bottom:1px solid #0066aa;color:#fff;font-family:'Share Tech Mono',monospace;font-size:14px;padding:11px 12px;outline:none;resize:none;max-height:110px;min-height:42px;line-height:1.45;transition:border-color .2s;border-radius:0;}
 #mi:focus{border-bottom-color:#00ccff;}
-#mi::placeholder{color:#111;}
-.btn-send{background:#00ccff;border:none;color:#000;width:42px;height:42px;border-radius:1px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity .2s;font-size:18px;font-weight:bold;}
-.btn-send:disabled{opacity:.3;pointer-events:none;}
+#mi::placeholder{color:#003344;}
+.btn-send{background:#00ccff;border:none;color:#000;width:42px;height:42px;border-radius:1px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;font-weight:bold;transition:opacity .2s;}
 .btn-send:active{opacity:.6;}
 </style>
 </head>
 <body>
 
-<div id="shield">
-  <svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#0a0a0a" stroke-width="1.5"/></svg>
-  <p>ekran chroniony</p>
-</div>
-
+<!-- CONNECTING -->
 <div id="conn">
   <div class="spin"></div>
   <p>łączenie z kanałem...</p>
 </div>
 
+<!-- LOGIN -->
 <div id="login">
   <div class="logo">VAULT</div>
-  <div class="logo-sub">encrypted · private · secure</div>
+  <div class="logo-sub">private · real-time · simple</div>
   <div class="form">
     <div>
       <div class="lbl">Nazwa kanału</div>
       <input id="ri" class="inp" type="text" placeholder="np. projekt-alfa" autocomplete="off" autocorrect="off" spellcheck="false">
     </div>
     <div>
-      <div class="lbl">Hasło (min. 10 znaków)</div>
+      <div class="lbl">Hasło kanału</div>
       <input id="pi" class="inp" type="password" placeholder="••••••••••" autocomplete="new-password">
     </div>
     <div>
@@ -134,12 +127,12 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Share Tech Mo
     <button class="btn-go" id="btn-go" onclick="enterVault()">Wejdź do kanału</button>
   </div>
   <div class="note">
-    szyfrowanie AES-256-GCM · lokalnie w przeglądarce<br>
-    dostęp tylko dla znających kanał + hasło<br>
-    screenshot → czarny ekran
+    dostęp tylko dla znających nazwę kanału + hasło<br>
+    wpisz te same dane na każdym urządzeniu
   </div>
 </div>
 
+<!-- CHAT -->
 <div id="chat">
   <div class="hdr">
     <div class="hdr-l">
@@ -147,127 +140,71 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Share Tech Mo
       <div class="r" id="ch-room">—</div>
     </div>
     <div class="hdr-r">
-      <div id="conn-status">
-        <div id="conn-dot"></div>
-        <div id="conn-label">łączenie</div>
+      <div class="participants">
+        <svg class="part-icon" viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="2">
+          <circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.87"/>
+        </svg>
+        <span id="part-count">0</span>
       </div>
+      <div id="part-names"></div>
+      <div id="conn-dot"></div>
       <button class="btn-exit" onclick="exitVault()">WYJDŹ</button>
     </div>
   </div>
-  <div class="enc">
-    <div class="enc-d"></div>
-    <div class="enc-t">end-to-end AES-256-GCM</div>
-  </div>
   <div id="msgs">
     <div class="empty" id="empty">
-      <div class="empty-i">🔐</div>
+      <div class="empty-i">💬</div>
       <div class="empty-t">kanał gotowy — wyślij pierwszą wiadomość</div>
     </div>
   </div>
   <div class="ch-in">
-    <textarea id="mi" placeholder="Wiadomość..." rows="1"></textarea>
-    <button class="btn-send" id="btn-send" onclick="sendMsg()">↑</button>
+    <textarea id="mi" placeholder="Wiadomość... (Enter = wyślij)" rows="1"></textarea>
+    <button class="btn-send" onclick="sendMsg()">↑</button>
   </div>
 </div>
 
-<!-- Gun.js from CDN -->
 <script src="https://cdn.jsdelivr.net/npm/gun@0.2020.1240/gun.js"></script>
 <script>
-// ── SCREEN PROTECTION ────────────────────────────────
-const shield = document.getElementById('shield');
-let shT;
-const showS = () => { clearTimeout(shT); shield.classList.add('on'); };
-const hideS = () => shield.classList.remove('on');
-document.addEventListener('visibilitychange', () => document.hidden ? showS() : hideS());
-window.addEventListener('blur', showS);
-window.addEventListener('focus', hideS);
-document.addEventListener('keyup', e => {
-  if (e.key === 'PrintScreen') { showS(); shT = setTimeout(hideS, 4000); }
-});
-document.addEventListener('contextmenu', e => e.preventDefault());
-document.addEventListener('keydown', e => {
-  if ((e.ctrlKey||e.metaKey) && e.shiftKey && 'ijck'.includes(e.key.toLowerCase())) e.preventDefault();
-  if (e.key === 'F12') e.preventDefault();
-});
-
-// ── CRYPTO ───────────────────────────────────────────
-const ENC = new TextEncoder(), DEC = new TextDecoder();
-
-async function deriveKey(pass, salt) {
-  const raw = await crypto.subtle.importKey('raw', ENC.encode(pass), 'PBKDF2', false, ['deriveKey']);
-  return crypto.subtle.deriveKey(
-    { name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' },
-    raw, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']
-  );
-}
-
-async function encryptMsg(text, pass) {
-  const salt = crypto.getRandomValues(new Uint8Array(16));
-  const iv   = crypto.getRandomValues(new Uint8Array(12));
-  const key  = await deriveKey(pass, salt);
-  const ct   = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, ENC.encode(text));
-  const out  = new Uint8Array(28 + ct.byteLength);
-  out.set(salt, 0); out.set(iv, 16); out.set(new Uint8Array(ct), 28);
-  return btoa(String.fromCharCode(...out));
-}
-
-async function decryptMsg(b64, pass) {
-  try {
-    const buf = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
-    const key = await deriveKey(pass, buf.slice(0, 16));
-    const pt  = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: buf.slice(16, 28) }, key, buf.slice(28));
-    return DEC.decode(pt);
-  } catch { return null; }
-}
-
-async function roomHash(room, pass) {
-  const d = ENC.encode('vault5::' + room + '::' + pass);
-  const h = await crypto.subtle.digest('SHA-256', d);
-  return Array.from(new Uint8Array(h)).map(b => b.toString(16).padStart(2, '0')).join('').slice(0, 40);
-}
-
 function esc(s) {
   return String(s)
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// ── STATE ────────────────────────────────────────────
-let gun, roomRef, myName, myPass, seen = new Set();
-let connOk = false;
+let gun, roomRef, presenceRef;
+let myName, myRoom, myPass, seen = new Set();
+let presenceInterval;
+const PRESENCE_TTL = 8000; // 8 seconds
+let presenceMap = {};
 
-function setConnStatus(status) {
-  const dot   = document.getElementById('conn-dot');
-  const label = document.getElementById('conn-label');
-  dot.className   = status;
-  label.className = status;
-  if (status === 'ok')  label.textContent = 'online';
-  if (status === 'err') label.textContent = 'brak połączenia';
-  if (status === '')    label.textContent = 'łączenie';
+// ── CONNECTION STATUS ────────────────────────────────
+function setDot(status) {
+  const dot = document.getElementById('conn-dot');
+  dot.className = status;
 }
 
-// ── ENTER VAULT ──────────────────────────────────────
+// ── ENTER ────────────────────────────────────────────
 window.enterVault = async function () {
   const room  = document.getElementById('ri').value.trim();
-  const pass  = document.getElementById('pi').value;
+  const pass  = document.getElementById('pi').value.trim();
   const name  = document.getElementById('ni').value.trim();
   const errEl = document.getElementById('ferr');
   const btn   = document.getElementById('btn-go');
   errEl.textContent = '';
 
-  if (!room)             { errEl.textContent = 'podaj nazwę kanału'; return; }
-  if (!pass)             { errEl.textContent = 'podaj hasło'; return; }
-  if (pass.length < 10)  { errEl.textContent = 'hasło musi mieć min. 10 znaków'; return; }
-  if (!name)             { errEl.textContent = 'podaj pseudonim'; return; }
+  if (!room) { errEl.textContent = 'podaj nazwę kanału'; return; }
+  if (!pass) { errEl.textContent = 'podaj hasło'; return; }
+  if (!name) { errEl.textContent = 'podaj pseudonim'; return; }
 
   btn.disabled = true;
   btn.textContent = 'Łączenie...';
   document.getElementById('conn').classList.add('on');
 
-  myPass = pass;
   myName = name;
+  myRoom = room;
+  myPass = pass;
 
-  // ── GUN with multiple working relay peers ──
   gun = Gun({
     peers: [
       'https://gun.eco/gun',
@@ -276,99 +213,72 @@ window.enterVault = async function () {
     ]
   });
 
-  // Monitor connection
-  gun.on('hi',  () => setConnStatus('ok'));
-  gun.on('bye', () => setConnStatus('err'));
+  gun.on('hi',  () => setDot('ok'));
+  gun.on('bye', () => setDot('err'));
 
-  const hash = await roomHash(room, pass);
-  roomRef = gun.get('v5-' + hash);
+  // Simple channel key = room name + pass (no crypto, just namespace)
+  const chanKey = 'vault5_' + btoa(room + '|' + pass).replace(/[^a-z0-9]/gi,'').slice(0,32);
+  roomRef     = gun.get(chanKey);
+  presenceRef = gun.get(chanKey + '_presence');
 
   setTimeout(() => {
     document.getElementById('conn').classList.remove('on');
     document.getElementById('login').classList.add('hide');
     document.getElementById('chat').classList.add('on');
     document.getElementById('ch-room').textContent = '# ' + room.toUpperCase();
+    setDot('ok');
     setupInput();
-    listenMessages();
-    // Initial ping to confirm connection
-    setTimeout(() => {
-      if (!connOk) setConnStatus('ok'); // optimistic after 3s
-    }, 3000);
-  }, 800);
+    loadMessages();
+    startPresence();
+  }, 700);
 };
 
-// ── LISTEN ───────────────────────────────────────────
-function listenMessages() {
-  roomRef.get('m').map().on(async (data, key) => {
-    if (!data || !data.e || seen.has(key)) return;
+// ── MESSAGES ─────────────────────────────────────────
+function loadMessages() {
+  roomRef.get('msgs').map().on((data, key) => {
+    if (!data || !data.text || !data.name || seen.has(key)) return;
     seen.add(key);
-    connOk = true;
-    setConnStatus('ok');
-
-    const plain = await decryptMsg(data.e, myPass);
-    if (!plain) return; // wrong key or corrupted
-
-    let obj;
-    try { obj = JSON.parse(plain); } catch { return; }
-    if (!obj || !obj.t || !obj.n || !obj.ts) return;
-
-    renderMsg(obj, key);
+    renderMsg(data, key);
   });
 }
 
-// ── SEND ─────────────────────────────────────────────
-window.sendMsg = async function () {
+window.sendMsg = function () {
   const inp = document.getElementById('mi');
   const txt = inp.value.trim();
   if (!txt || !roomRef) return;
-
   inp.value = '';
   inp.style.height = 'auto';
 
   const ts  = Date.now();
-  const obj = { t: txt, n: myName, ts };
+  const key = ts + '_' + Math.random().toString(36).slice(2, 8);
 
-  // Show message immediately (optimistic)
-  const tempKey = 'temp-' + ts;
-  renderMsg(obj, tempKey, true);
-
-  const e  = await encryptMsg(JSON.stringify(obj), myPass);
-  const id = ts + '-' + Math.random().toString(36).slice(2, 8);
-
-  roomRef.get('m').get(id).put({ e, ts }, ack => {
-    if (ack.err) {
-      console.warn('Send error:', ack.err);
-      setConnStatus('err');
-    } else {
-      setConnStatus('ok');
-      // Remove temp, real message will arrive via listener
-      document.querySelector(`[data-key="${tempKey}"]`)?.remove();
-    }
-  });
+  const msg = { text: txt, name: myName, ts };
+  roomRef.get('msgs').get(key).put(msg);
 };
 
-// ── RENDER ───────────────────────────────────────────
-function renderMsg(msg, key, isSending = false) {
+function renderMsg(msg, key) {
   const msgs = document.getElementById('msgs');
   document.getElementById('empty')?.remove();
 
   if (document.querySelector(`[data-key="${key}"]`)) return;
 
-  const isMe = msg.n === myName;
+  const isMe = msg.name === myName;
   const time = new Date(msg.ts).toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' });
 
   const w = document.createElement('div');
-  w.className = 'mw ' + (isMe ? 'me' : 'them') + (isSending ? ' sending' : '');
+  w.className = 'mw ' + (isMe ? 'me' : 'them');
   w.dataset.key = key;
-  w.dataset.ts  = msg.ts;
-  w.innerHTML = `
-    <div class="meta">${esc(msg.n)} <span class="mtime">· ${time}</span></div>
-    <div class="mb">${esc(msg.t).replace(/\n/g, '<br>')}</div>`;
+  w.dataset.ts  = String(msg.ts);
 
-  // Insert sorted by timestamp
+  w.innerHTML =
+    `<div class="meta">${esc(msg.name)} <span class="mtime">· ${time}</span></div>` +
+    `<div class="mb">${esc(msg.text).replace(/\n/g, '<br>')}</div>`;
+
+  // Insert sorted
   let inserted = false;
-  for (const el of msgs.querySelectorAll('.mw[data-ts]')) {
-    if (parseInt(el.dataset.ts) > msg.ts) {
+  const existing = msgs.querySelectorAll('.mw[data-ts]');
+  for (const el of existing) {
+    if (Number(el.dataset.ts) > msg.ts) {
       msgs.insertBefore(w, el);
       inserted = true;
       break;
@@ -378,25 +288,59 @@ function renderMsg(msg, key, isSending = false) {
   msgs.scrollTop = msgs.scrollHeight;
 }
 
+// ── PRESENCE ─────────────────────────────────────────
+function startPresence() {
+  function beat() {
+    if (!presenceRef) return;
+    presenceRef.get(myName).put({ name: myName, ts: Date.now() });
+  }
+  beat();
+  presenceInterval = setInterval(beat, 4000);
+
+  // Listen to all presence entries
+  presenceRef.map().on((data, key) => {
+    if (!data || !data.name) return;
+    presenceMap[data.name] = data.ts;
+    updateParticipants();
+  });
+
+  // Prune stale every 5s
+  setInterval(updateParticipants, 5000);
+}
+
+function updateParticipants() {
+  const now = Date.now();
+  const active = Object.entries(presenceMap)
+    .filter(([, ts]) => now - ts < PRESENCE_TTL)
+    .map(([name]) => name);
+
+  document.getElementById('part-count').textContent = active.length;
+  document.getElementById('part-names').textContent = active.join(', ');
+}
+
 // ── EXIT ─────────────────────────────────────────────
 window.exitVault = function () {
+  clearInterval(presenceInterval);
+  if (presenceRef && myName) presenceRef.get(myName).put(null);
   if (roomRef) { roomRef.off(); roomRef = null; }
+  presenceRef = null;
   seen.clear();
+  presenceMap = {};
   gun = null;
-  connOk = false;
-  setConnStatus('');
 
   document.getElementById('msgs').innerHTML =
-    '<div class="empty" id="empty"><div class="empty-i">🔐</div><div class="empty-t">kanał gotowy — wyślij pierwszą wiadomość</div></div>';
-
+    '<div class="empty" id="empty"><div class="empty-i">💬</div><div class="empty-t">kanał gotowy — wyślij pierwszą wiadomość</div></div>';
   document.getElementById('chat').classList.remove('on');
   document.getElementById('login').classList.remove('hide');
+  document.getElementById('part-count').textContent = '0';
+  document.getElementById('part-names').textContent = '';
 
   const btn = document.getElementById('btn-go');
   btn.textContent = 'Wejdź do kanału';
   btn.disabled = false;
   document.getElementById('pi').value = '';
   document.getElementById('ferr').textContent = '';
+  setDot('');
 };
 
 // ── INPUT ────────────────────────────────────────────
