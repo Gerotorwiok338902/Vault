@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>VAULT</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Oxanium:wght@300;600;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #000;
+  --border: #151515;
+  --border2: #1f1f1f;
+  --accent: #00ccff;
+  --accent-dim: #001a22;
+  --text: #cccccc;
+  --danger: #ff2244;
+  --mono: 'Share Tech Mono', monospace;
+  --display: 'Oxanium', sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent; -webkit-touch-callout:none;
+    -webkit-user-select:none; user-select:none; }
+input, textarea { -webkit-user-select:text; user-select:text; }
+html { height:100%; height:-webkit-fill-available; }
+body { min-height:100vh; min-height:-webkit-fill-available; background:#000; overflow:hidden; position:fixed; inset:0; }
+body::after {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:9000;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,255,255,.01) 3px,rgba(255,255,255,.01) 4px);
+}
+
+/* SHIELD */
+#shield { position:fixed; inset:0; background:#000; z-index:9999; display:none; align-items:center; justify-content:center; flex-direction:column; gap:12px; }
+#shield.on { display:flex; }
+.sh-txt { font-family:var(--mono); font-size:9px; letter-spacing:4px; color:#111; text-transform:uppercase; }
+
+/* SCREENS */
+#login { position:fixed; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:32px 28px; padding-top:calc(env(safe-area-inset-top,0px) + 32px); overflow-y:auto; -webkit-overflow-scrolling:touch; }
+#chat { position:fixed; inset:0; display:none; flex-direction:column; }
+#chat.on { display:flex; }
+
+/* LOGIN */
+.logo { font-family:var(--display); font-size:56px; font-weight:800; letter-spacing:14px; color:#fff; text-align:center; line-height:1; }
+.logo-sub { font-family:var(--mono); font-size:8px; letter-spacing:5px; color:#181818; text-align:center; margin-top:6px; text-transform:uppercase; }
+.logo-sep { width:1px; height:18px; background:linear-gradient(to bottom,transparent,#1c1c1c); margin:14px auto 32px; }
+.form { width:100%; max-width:360px; display:flex; flex-direction:column; gap:22px; }
+.fg { display:flex; flex-direction:column; gap:8px; }
+.fl { font-family:var(--mono); font-size:8px; letter-spacing:4px; color:#1c1c1c; text-transform:uppercase; }
+.fi {
+  width:100%; background:transparent; border:none; border-bottom:1px solid var(--border2);
+  color:var(--text); font-family:var(--mono); font-size:16px; padding:12px 2px;
+  outline:none; border-radius:0; -webkit-appearance:none; appearance:none; transition:border-color .2s;
+}
+.fi:focus { border-bottom-color:var(--accent); }
+.fi::placeholder { color:#1c1c1c; }
+#ferr { font-family:var(--mono); font-size:9px; color:var(--danger); letter-spacing:2px; text-align:center; min-height:12px; text-transform:uppercase; }
+.btn-enter {
+  background:transparent; border:1px solid var(--accent); color:var(--accent);
+  font-family:var(--display); font-size:11px; font-weight:700; letter-spacing:7px;
+  text-transform:uppercase; padding:17px; cursor:pointer; border-radius:0;
+  -webkit-appearance:none; width:100%; margin-top:4px; transition:all .2s;
+}
+.btn-enter:active { background:var(--accent); color:#000; }
+.btn-enter:disabled { opacity:.3; pointer-events:none; }
+.login-note { font-family:var(--mono); font-size:7px; color:#111; letter-spacing:1.5px; text-align:center; margin-top:28px; line-height:2.2; text-transform:uppercase; max-width:320px; }
+
+/* CHAT HEADER */
+.ch-header {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px 16px; padding-top:calc(env(safe-area-inset-top,0px) + 10px);
+  border-bottom:1px solid var(--border); flex-shrink:0;
+}
+.ch-title { font-family:var(--display); font-size:10px; font-weight:700; letter-spacing:6px; color:var(--accent); text-transform:uppercase; }
+.ch-room { font-family:var(--mono); font-size:9px; color:#222; letter-spacing:2px; margin-top:2px; }
+.ch-right { display:flex; align-items:center; gap:10px; }
+.dot-live { width:5px; height:5px; border-radius:50%; background:#00ff44; box-shadow:0 0 5px #00ff44; animation:blink 2.5s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+.btn-exit { background:none; border:1px solid #181818; color:#282828; font-family:var(--mono); font-size:8px; letter-spacing:3px; padding:7px 13px; cursor:pointer; text-transform:uppercase; border-radius:0; -webkit-appearance:none; }
+.btn-exit:active { border-color:var(--danger); color:var(--danger); }
+.enc-strip { display:flex; align-items:center; gap:8px; padding:5px 16px; border-bottom:1px solid var(--border); flex-shrink:0; background:#010101; }
+.enc-dot { width:4px; height:4px; border-radius:50%; background:#00ff44; flex-shrink:0; }
+.enc-txt { font-family:var(--mono); font-size:7px; letter-spacing:2px; color:#152015; text-transform:uppercase; }
+
+/* MESSAGES */
+#msgs { flex:1; overflow-y:auto; overflow-x:hidden; -webkit-overflow-scrolling:touch; padding:16px; display:flex; flex-direction:column; gap:14px; }
+#msgs::-webkit-scrollbar { display:none; }
+.empty { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; }
+.empty-icon { font-size:26px; filter:grayscale(1) opacity(.2); }
+.empty-txt { font-family:var(--mono); font-size:8px; letter-spacing:3px; text-transform:uppercase; color:#151515; }
+.mw { display:flex; flex-direction:column; gap:3px; animation:pop .18s ease; }
+@keyframes pop { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:none} }
+.mw.me { align-items:flex-end; }
+.mw.them { align-items:flex-start; }
+.mmeta { font-family:var(--mono); font-size:8px; letter-spacing:1.5px; color:#222; text-transform:uppercase; }
+.mb { max-width:82%; padding:10px 13px; font-family:var(--mono); font-size:13px; line-height:1.6; word-break:break-word; border-radius:2px; }
+.mw.me .mb { background:var(--accent-dim); border:1px solid #004466; color:#77ddff; }
+.mw.them .mb { background:#0b0b0b; border:1px solid var(--border2); color:var(--text); }
+.mtime { color:#191919; }
+
+/* INPUT */
+.ch-input {
+  display:flex; align-items:flex-end; gap:10px;
+  padding:10px 16px; padding-bottom:calc(env(safe-area-inset-bottom,0px) + 10px);
+  border-top:1px solid var(--border); flex-shrink:0; background:#000;
+}
+#mi {
+  flex:1; background:transparent; border:none; border-bottom:1px solid var(--border2);
+  color:var(--text); font-family:var(--mono); font-size:16px;
+  padding:10px 2px; outline:none; resize:none;
+  max-height:100px; min-height:40px; line-height:1.45;
+  transition:border-color .2s; border-radius:0; -webkit-appearance:none;
+}
+#mi:focus { border-bottom-color:var(--accent); }
+#mi::placeholder { color:#181818; }
+.btn-send { background:var(--accent); border:none; color:#000; width:42px; height:42px; border-radius:2px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; -webkit-appearance:none; }
+.btn-send:active { opacity:.6; }
+
+/* CONNECTING */
+#connecting { position:fixed; inset:0; background:#000; z-index:200; display:none; flex-direction:column; align-items:center; justify-content:center; gap:14px; }
+#connecting.on { display:flex; }
+.ring { width:36px; height:36px; border:1px solid #111; border-top-color:var(--accent); border-radius:50%; animation:spin 1s linear infinite; }
+@keyframes spin { to{transform:rotate(360deg)} }
+.conn-txt { font-family:var(--mono); font-size:8px; letter-spacing:4px; color:#1e1e1e; text-transform:uppercase; }
+</style>
+</head>
+<body>
+
+<div id="shield">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="opacity:.06">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#fff" stroke-width="1.5"/>
+  </svg>
+  <div class="sh-txt">ekran chroniony</div>
+</div>
+
+<div id="connecting">
+  <div class="ring"></div>
+  <div class="conn-txt">łączenie</div>
+</div>
+
+<div id="login">
+  <div class="logo">VAULT</div>
+  <div class="logo-sub">Encrypted · Private · Secure</div>
+  <div class="logo-sep"></div>
+  <div class="form">
+    <div class="fg">
+      <div class="fl">Nazwa kanału</div>
+      <input id="ri" type="text" class="fi" placeholder="np. moj-kanal" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
+    </div>
+    <div class="fg">
+      <div class="fl">Hasło (min. 10 znaków)</div>
+      <input id="pi" type="password" class="fi" placeholder="••••••••••" autocomplete="off">
+    </div>
+    <div class="fg">
+      <div class="fl">Twój pseudonim</div>
+      <input id="ni" type="text" class="fi" placeholder="np. Hawk" maxlength="20" autocomplete="off" autocorrect="off" autocapitalize="none">
+    </div>
+    <div id="ferr"></div>
+    <button class="btn-enter" id="btn-enter" onclick="enterVault()">Wejdź do kanału</button>
+  </div>
+  <div class="login-note">
+    szyfrowanie AES-256 · klucze tylko w twojej przeglądarce<br>
+    dostęp tylko dla znających kanał + hasło<br>
+    ekran blokuje się przy próbie zrzutu
+  </div>
+</div>
+
+<div id="chat">
+  <div class="ch-header">
+    <div>
+      <div class="ch-title">VAULT</div>
+      <div class="ch-room" id="ch-room">—</div>
+    </div>
+    <div class="ch-right">
+      <div class="dot-live"></div>
+      <button class="btn-exit" onclick="exitVault()">WYJDŹ</button>
+    </div>
+  </div>
+  <div class="enc-strip">
+    <div class="enc-dot"></div>
+    <div class="enc-txt">end-to-end AES-256-GCM aktywne</div>
+  </div>
+  <div id="msgs">
+    <div class="empty" id="empty">
+      <div class="empty-icon">🔐</div>
+      <div class="empty-txt">wyślij pierwszą wiadomość</div>
+    </div>
+  </div>
+  <div class="ch-input">
+    <textarea id="mi" placeholder="Wiadomość..." rows="1"></textarea>
+    <button class="btn-send" onclick="sendMsg()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+        <path d="M22 2L11 13" stroke="#000" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
+<script>
+// ── SHIELD ──
+const shield = document.getElementById('shield');
+let stimer;
+const showShield = () => { clearTimeout(stimer); shield.classList.add('on'); };
+const hideShield = () => shield.classList.remove('on');
+document.addEventListener('visibilitychange', () => document.hidden ? showShield() : hideShield());
+window.addEventListener('blur', showShield);
+window.addEventListener('focus', hideShield);
+window.addEventListener('pagehide', showShield);
+window.addEventListener('pageshow', hideShield);
+document.addEventListener('keyup', e => { if(e.key==='PrintScreen'){showShield();stimer=setTimeout(hideShield,4000);} });
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('keydown', e => {
+  if(e.key==='F12') e.preventDefault();
+  if((e.ctrlKey||e.metaKey)&&e.shiftKey&&'ijcku'.includes(e.key.toLowerCase())) e.preventDefault();
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='u') e.preventDefault();
+});
+
+// ── CRYPTO ──
+const te = new TextEncoder(), td = new TextDecoder();
+async function deriveKey(pass, salt) {
+  const km = await crypto.subtle.importKey('raw', te.encode(pass), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey(
+    {name:'PBKDF2', salt, iterations:150000, hash:'SHA-256'},
+    km, {name:'AES-GCM', length:256}, false, ['encrypt','decrypt']
+  );
+}
+async function encrypt(plain, pass) {
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const iv   = crypto.getRandomValues(new Uint8Array(12));
+  const key  = await deriveKey(pass, salt);
+  const ct   = await crypto.subtle.encrypt({name:'AES-GCM', iv}, key, te.encode(plain));
+  const out  = new Uint8Array(28+ct.byteLength);
+  out.set(salt,0); out.set(iv,16); out.set(new Uint8Array(ct),28);
+  return btoa(String.fromCharCode(...out));
+}
+async function decrypt(b64, pass) {
+  try {
+    const buf = Uint8Array.from(atob(b64), c=>c.charCodeAt(0));
+    const key = await deriveKey(pass, buf.slice(0,16));
+    const pt  = await crypto.subtle.decrypt({name:'AES-GCM',iv:buf.slice(16,28)}, key, buf.slice(28));
+    return td.decode(pt);
+  } catch { return null; }
+}
+async function roomHash(room, pass) {
+  const h = await crypto.subtle.digest('SHA-256', te.encode(room+'|||'+pass));
+  return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('').slice(0,40);
+}
+
+// ── STATE ──
+let gun, ref, myName, myPass, seenIds = new Set();
+
+// ── ENTER ──
+async function enterVault() {
+  const room = document.getElementById('ri').value.trim();
+  const pass = document.getElementById('pi').value;
+  const name = document.getElementById('ni').value.trim();
+  const err  = document.getElementById('ferr');
+  err.textContent = '';
+  if(!room){err.textContent='podaj nazwę kanału';return;}
+  if(pass.length<10){err.textContent='hasło min. 10 znaków';return;}
+  if(!name){err.textContent='podaj pseudonim';return;}
+
+  const btn = document.getElementById('btn-enter');
+  btn.disabled=true; btn.textContent='Łączenie...';
+  document.getElementById('connecting').classList.add('on');
+
+  myPass=pass; myName=name;
+  gun = Gun({
+    peers:['https://gun-manhattan.herokuapp.com/gun','https://gundb.io/gun'],
+    localStorage:false, radisk:false
+  });
+
+  const h = await roomHash(room, pass);
+  ref = gun.get('vault3-'+h);
+
+  setTimeout(()=>{
+    document.getElementById('connecting').classList.remove('on');
+    document.getElementById('login').style.display='none';
+    const chat = document.getElementById('chat');
+    chat.classList.add('on');
+    document.getElementById('ch-room').textContent='# '+room.toUpperCase();
+    initInput();
+    listen();
+  }, 800);
+}
+
+// ── LISTEN ──
+function listen() {
+  ref.get('m').map().on(async (data, key) => {
+    if(!data?.e||seenIds.has(key)) return;
+    seenIds.add(key);
+    const plain = await decrypt(data.e, myPass);
+    if(!plain) return;
+    let obj; try{obj=JSON.parse(plain);}catch{return;}
+    if(!obj?.t) return;
+    renderMsg(obj, key);
+  });
+}
+
+// ── SEND ──
+async function sendMsg() {
+  const ta = document.getElementById('mi');
+  const text = ta.value.trim();
+  if(!text) return;
+  ta.value=''; ta.style.height='auto';
+  const enc = await encrypt(JSON.stringify({t:text,n:myName,ts:Date.now()}), myPass);
+  const id  = Date.now()+'-'+Math.random().toString(36).slice(2,6);
+  ref.get('m').get(id).put({e:enc});
+}
+
+// ── RENDER ──
+function renderMsg(msg, key) {
+  const msgs = document.getElementById('msgs');
+  document.getElementById('empty')?.remove();
+  const isMe = msg.n===myName;
+  const t = new Date(msg.ts).toLocaleTimeString('pl-PL',{hour:'2-digit',minute:'2-digit'});
+  const w = document.createElement('div');
+  w.className='mw '+(isMe?'me':'them');
+  w.dataset.ts=msg.ts; w.dataset.key=key;
+  w.innerHTML=`<div class="mmeta">${esc(msg.n)} <span class="mtime">· ${t}</span></div><div class="mb">${esc(msg.t).replace(/\n/g,'<br>')}</div>`;
+  let ins=false;
+  for(const el of msgs.querySelectorAll('.mw[data-ts]')) {
+    if(parseInt(el.dataset.ts)>msg.ts){msgs.insertBefore(w,el);ins=true;break;}
+  }
+  if(!ins) msgs.appendChild(w);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// ── EXIT ──
+function exitVault() {
+  if(ref){ref.off();ref=null;} gun=null; seenIds.clear();
+  document.getElementById('msgs').innerHTML='<div class="empty" id="empty"><div class="empty-icon">🔐</div><div class="empty-txt">wyślij pierwszą wiadomość</div></div>';
+  document.getElementById('chat').classList.remove('on');
+  document.getElementById('login').style.display='flex';
+  const btn=document.getElementById('btn-enter');
+  btn.disabled=false; btn.textContent='Wejdź do kanału';
+  document.getElementById('pi').value=''; document.getElementById('ferr').textContent='';
+}
+
+// ── INPUT ──
+function initInput() {
+  const ta = document.getElementById('mi');
+  ta.addEventListener('input', ()=>{
+    ta.style.height='auto';
+    ta.style.height=Math.min(ta.scrollHeight,100)+'px';
+  });
+  ta.addEventListener('keydown', e=>{
+    if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}
+  });
+  // iOS: scroll to bottom when keyboard opens
+  ta.addEventListener('focus', ()=>setTimeout(()=>{ document.getElementById('msgs').scrollTop=99999; },350));
+}
+['ri','pi','ni'].forEach(id=>{
+  document.getElementById(id).addEventListener('keydown', e=>{if(e.key==='Enter')enterVault();});
+});
+</script>
+</body>
+</html>
