@@ -17,7 +17,7 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Share Tech Mo
 #login.hide{display:none;}
 .logo{font-family:'Oxanium',sans-serif;font-size:58px;font-weight:800;letter-spacing:14px;color:#fff;line-height:1;text-align:center;}
 .logo-sub{font-size:8px;letter-spacing:5px;color:#004466;text-transform:uppercase;text-align:center;margin-top:6px;}
-.form{width:100%;max-width:320px;margin-top:36px;display:flex;flex-direction:column;gap:14px;}
+.form{width:100%;max-width:320px;margin-top:32px;display:flex;flex-direction:column;gap:14px;}
 .lbl{font-size:8px;letter-spacing:4px;color:#0077aa;text-transform:uppercase;margin-bottom:5px;}
 .inp{width:100%;background:#000;border:none;border-bottom:1px solid #003344;color:#fff;font-family:'Share Tech Mono',monospace;font-size:15px;padding:12px 10px;outline:none;-webkit-appearance:none;border-radius:0;transition:border-color .2s;}
 .inp:focus{border-bottom-color:#00ccff;}
@@ -26,7 +26,7 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Share Tech Mo
 .btn-go{width:100%;background:transparent;border:1px solid #00ccff;color:#00ccff;font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:8px;text-transform:uppercase;padding:14px;cursor:pointer;border-radius:0;transition:all .2s;margin-top:4px;}
 .btn-go:hover,.btn-go:active{background:#00ccff;color:#000;}
 .btn-go:disabled{opacity:.25;pointer-events:none;}
-.note{font-size:8px;color:#003344;letter-spacing:2px;text-align:center;margin-top:28px;line-height:2.4;text-transform:uppercase;}
+.note{font-size:8px;color:#003344;letter-spacing:2px;text-align:center;margin-top:24px;line-height:2.4;text-transform:uppercase;}
 
 /* CONNECTING */
 #conn{position:fixed;inset:0;background:#000;z-index:200;display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px;}
@@ -42,18 +42,16 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Share Tech Mo
 .hdr{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-bottom:1px solid #0a1a22;flex-shrink:0;}
 .hdr-l .t{font-size:10px;font-weight:700;letter-spacing:6px;color:#00ccff;text-transform:uppercase;}
 .hdr-l .r{font-size:8px;color:#0077aa;letter-spacing:2px;margin-top:2px;}
-.hdr-r{display:flex;align-items:center;gap:14px;}
+.hdr-r{display:flex;align-items:center;gap:12px;}
 
-/* participants */
-.participants{display:flex;align-items:center;gap:6px;}
-.part-icon{width:14px;height:14px;opacity:.7;}
-#part-count{font-size:11px;color:#00ccff;letter-spacing:1px;font-weight:bold;min-width:10px;}
-#part-names{font-size:7px;color:#005577;letter-spacing:1px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.pres{display:flex;align-items:center;gap:5px;}
+.pres-ico{font-size:12px;}
+#pres-count{font-size:13px;color:#00ccff;font-weight:bold;}
+#pres-names{font-size:7px;color:#005577;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 
-/* connection dot */
-#conn-dot{width:6px;height:6px;border-radius:50%;background:#555;transition:background .4s;flex-shrink:0;}
-#conn-dot.ok{background:#00ff88;box-shadow:0 0 6px #00ff88;animation:bl 2.5s infinite;}
-#conn-dot.err{background:#ff3355;}
+#sdot{width:6px;height:6px;border-radius:50%;background:#555;transition:background .4s;flex-shrink:0;}
+#sdot.ok{background:#00ff88;box-shadow:0 0 6px #00ff88;animation:bl 2.5s infinite;}
+#sdot.err{background:#ff3355;}
 @keyframes bl{0%,100%{opacity:1}50%{opacity:.3}}
 
 .btn-exit{background:none;border:1px solid #0a1a22;color:#0077aa;font-family:'Share Tech Mono',monospace;font-size:7px;letter-spacing:3px;padding:6px 12px;cursor:pointer;text-transform:uppercase;transition:all .2s;border-radius:0;}
@@ -63,7 +61,6 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Share Tech Mo
 #msgs{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth;}
 #msgs::-webkit-scrollbar{width:2px;}
 #msgs::-webkit-scrollbar-thumb{background:#002233;}
-
 .empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;}
 .empty-i{font-size:26px;opacity:.12;}
 .empty-t{font-size:8px;letter-spacing:3px;color:#003344;text-transform:uppercase;}
@@ -72,22 +69,10 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Share Tech Mo
 @keyframes mn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 .mw.me{align-items:flex-end;}
 .mw.them{align-items:flex-start;}
-
 .meta{font-size:8px;letter-spacing:2px;color:#0088bb;text-transform:uppercase;}
 .mtime{color:#005577;}
-
-.mw.me .mb{
-  max-width:82%;padding:10px 14px;
-  font-size:14px;line-height:1.6;word-break:break-word;
-  background:#003355;border:1px solid #0066aa;
-  color:#ffffff;border-radius:2px 0 2px 2px;
-}
-.mw.them .mb{
-  max-width:82%;padding:10px 14px;
-  font-size:14px;line-height:1.6;word-break:break-word;
-  background:#060f18;border:1px solid #0a2030;
-  color:#ffffff;border-radius:0 2px 2px 2px;
-}
+.mw.me .mb{max-width:82%;padding:10px 14px;font-size:14px;line-height:1.6;word-break:break-word;background:#003355;border:1px solid #0066aa;color:#fff;border-radius:2px 0 2px 2px;}
+.mw.them .mb{max-width:82%;padding:10px 14px;font-size:14px;line-height:1.6;word-break:break-word;background:#060f18;border:1px solid #0a2030;color:#fff;border-radius:0 2px 2px 2px;}
 
 /* INPUT */
 .ch-in{display:flex;align-items:flex-end;gap:10px;padding:12px 16px;border-top:1px solid #0a1a22;flex-shrink:0;background:#000;}
@@ -100,39 +85,21 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Share Tech Mo
 </head>
 <body>
 
-<!-- CONNECTING -->
-<div id="conn">
-  <div class="spin"></div>
-  <p>łączenie z kanałem...</p>
-</div>
+<div id="conn"><div class="spin"></div><p id="conn-txt">łączenie...</p></div>
 
-<!-- LOGIN -->
 <div id="login">
   <div class="logo">VAULT</div>
-  <div class="logo-sub">private · real-time · simple</div>
+  <div class="logo-sub">private · real-time · zero setup</div>
   <div class="form">
-    <div>
-      <div class="lbl">Nazwa kanału</div>
-      <input id="ri" class="inp" type="text" placeholder="np. projekt-alfa" autocomplete="off" autocorrect="off" spellcheck="false">
-    </div>
-    <div>
-      <div class="lbl">Hasło kanału</div>
-      <input id="pi" class="inp" type="password" placeholder="••••••••••" autocomplete="new-password">
-    </div>
-    <div>
-      <div class="lbl">Twój pseudonim</div>
-      <input id="ni" class="inp" type="text" placeholder="np. Hawk" maxlength="20" autocomplete="off" autocorrect="off">
-    </div>
+    <div><div class="lbl">Nazwa kanału</div><input id="ri" class="inp" type="text" placeholder="np. projekt-alfa" autocomplete="off" autocorrect="off" spellcheck="false"></div>
+    <div><div class="lbl">Hasło kanału</div><input id="pi" class="inp" type="password" placeholder="••••••••••" autocomplete="new-password"></div>
+    <div><div class="lbl">Twój pseudonim</div><input id="ni" class="inp" type="text" placeholder="np. Hawk" maxlength="20" autocomplete="off" autocorrect="off"></div>
     <div class="err" id="ferr"></div>
     <button class="btn-go" id="btn-go" onclick="enterVault()">Wejdź do kanału</button>
   </div>
-  <div class="note">
-    dostęp tylko dla znających nazwę kanału + hasło<br>
-    wpisz te same dane na każdym urządzeniu
-  </div>
+  <div class="note">te same dane na każdym urządzeniu = wspólny kanał</div>
 </div>
 
-<!-- CHAT -->
 <div id="chat">
   <div class="hdr">
     <div class="hdr-l">
@@ -140,15 +107,12 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Share Tech Mo
       <div class="r" id="ch-room">—</div>
     </div>
     <div class="hdr-r">
-      <div class="participants">
-        <svg class="part-icon" viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="2">
-          <circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/>
-          <path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.87"/>
-        </svg>
-        <span id="part-count">0</span>
+      <div class="pres">
+        <span class="pres-ico">👥</span>
+        <span id="pres-count">1</span>
       </div>
-      <div id="part-names"></div>
-      <div id="conn-dot"></div>
+      <div id="pres-names"></div>
+      <div id="sdot"></div>
       <button class="btn-exit" onclick="exitVault()">WYJDŹ</button>
     </div>
   </div>
@@ -164,28 +128,28 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Share Tech Mo
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/gun@0.2020.1240/gun.js"></script>
+<!-- MQTT.js -->
+<script src="https://unpkg.com/mqtt@5.3.4/dist/mqtt.min.js"></script>
 <script>
-function esc(s) {
-  return String(s)
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
-let gun, roomRef, presenceRef;
-let myName, myRoom, myPass, seen = new Set();
-let presenceInterval;
-const PRESENCE_TTL = 8000; // 8 seconds
+// Simple hash for topic name
+async function makeTopicKey(room, pass) {
+  const data = new TextEncoder().encode('vault::' + room + '::' + pass);
+  const hash = await crypto.subtle.digest('SHA-256', data);
+  return 'vault/' + Array.from(new Uint8Array(hash))
+    .map(b => b.toString(16).padStart(2,'0')).join('').slice(0, 32);
+}
+
+let client, myName, topic, presenceTopic, presInterval;
 let presenceMap = {};
 
-// ── CONNECTION STATUS ────────────────────────────────
-function setDot(status) {
-  const dot = document.getElementById('conn-dot');
-  dot.className = status;
-}
+function setDot(s){ document.getElementById('sdot').className = s; }
 
-// ── ENTER ────────────────────────────────────────────
-window.enterVault = async function () {
+// ── ENTER ──────────────────────────────────────────
+window.enterVault = async function(){
   const room  = document.getElementById('ri').value.trim();
   const pass  = document.getElementById('pi').value.trim();
   const name  = document.getElementById('ni').value.trim();
@@ -193,172 +157,187 @@ window.enterVault = async function () {
   const btn   = document.getElementById('btn-go');
   errEl.textContent = '';
 
-  if (!room) { errEl.textContent = 'podaj nazwę kanału'; return; }
-  if (!pass) { errEl.textContent = 'podaj hasło'; return; }
-  if (!name) { errEl.textContent = 'podaj pseudonim'; return; }
+  if (!room){ errEl.textContent = 'podaj nazwę kanału'; return; }
+  if (!pass){ errEl.textContent = 'podaj hasło'; return; }
+  if (!name){ errEl.textContent = 'podaj pseudonim'; return; }
 
-  btn.disabled = true;
-  btn.textContent = 'Łączenie...';
+  btn.disabled = true; btn.textContent = 'Łączenie...';
   document.getElementById('conn').classList.add('on');
+  document.getElementById('conn-txt').textContent = 'łączenie z serwerem...';
 
   myName = name;
-  myRoom = room;
-  myPass = pass;
+  const key  = await makeTopicKey(room, pass);
+  topic         = key + '/msg';
+  presenceTopic = key + '/pres';
 
-  gun = Gun({
-    peers: [
-      'https://gun.eco/gun',
-      'https://peer.wallie.io/gun',
-      'https://gundb.io/gun'
-    ]
+  const clientId = 'vault_' + Math.random().toString(36).slice(2, 10);
+
+  // Connect to HiveMQ public broker over WSS
+  client = mqtt.connect('wss://broker.hivemq.com:8884/mqtt', {
+    clientId,
+    clean: true,
+    reconnectPeriod: 3000,
+    connectTimeout: 10000,
+    keepalive: 30,
+    will: {
+      topic: presenceTopic,
+      payload: JSON.stringify({ name, online: false }),
+      qos: 0,
+      retain: false
+    }
   });
 
-  gun.on('hi',  () => setDot('ok'));
-  gun.on('bye', () => setDot('err'));
+  client.on('connect', () => {
+    setDot('ok');
+    client.subscribe(topic,         { qos: 0 });
+    client.subscribe(presenceTopic, { qos: 0 });
 
-  // Simple channel key = room name + pass (no crypto, just namespace)
-  const chanKey = 'vault5_' + btoa(room + '|' + pass).replace(/[^a-z0-9]/gi,'').slice(0,32);
-  roomRef     = gun.get(chanKey);
-  presenceRef = gun.get(chanKey + '_presence');
-
-  setTimeout(() => {
     document.getElementById('conn').classList.remove('on');
     document.getElementById('login').classList.add('hide');
     document.getElementById('chat').classList.add('on');
     document.getElementById('ch-room').textContent = '# ' + room.toUpperCase();
-    setDot('ok');
+    btn.disabled = false; btn.textContent = 'Wejdź do kanału';
+
     setupInput();
-    loadMessages();
-    startPresence();
-  }, 700);
+    announcePresence(true);
+    presInterval = setInterval(() => announcePresence(true), 5000);
+    prunePres();
+  });
+
+  client.on('reconnect', () => setDot(''));
+  client.on('error',     () => setDot('err'));
+  client.on('offline',   () => setDot('err'));
+
+  client.on('message', (t, payload) => {
+    try {
+      const msg = JSON.parse(payload.toString());
+      if (t === topic)         handleMsg(msg);
+      if (t === presenceTopic) handlePres(msg);
+    } catch {}
+  });
+
+  // Timeout fallback
+  setTimeout(() => {
+    if (document.getElementById('conn').classList.contains('on')) {
+      document.getElementById('conn').classList.remove('on');
+      btn.disabled = false; btn.textContent = 'Wejdź do kanału';
+      errEl.textContent = 'nie można połączyć — sprawdź internet';
+      if (client) client.end(true);
+    }
+  }, 12000);
 };
 
-// ── MESSAGES ─────────────────────────────────────────
-function loadMessages() {
-  roomRef.get('msgs').map().on((data, key) => {
-    if (!data || !data.text || !data.name || seen.has(key)) return;
-    seen.add(key);
-    renderMsg(data, key);
-  });
+// ── PRESENCE ─────────────────────────────────────────
+function announcePresence(online){
+  if (!client || !client.connected) return;
+  presenceMap[myName] = Date.now();
+  updatePresUI();
+  client.publish(presenceTopic, JSON.stringify({ name: myName, online, ts: Date.now() }), { qos: 0 });
 }
 
-window.sendMsg = function () {
+function handlePres(msg){
+  if (!msg || !msg.name) return;
+  if (msg.online === false) {
+    delete presenceMap[msg.name];
+  } else {
+    presenceMap[msg.name] = msg.ts || Date.now();
+  }
+  updatePresUI();
+}
+
+function prunePres(){
+  setInterval(() => {
+    const now = Date.now();
+    for (const [n, ts] of Object.entries(presenceMap)){
+      if (now - ts > 15000) delete presenceMap[n];
+    }
+    updatePresUI();
+  }, 6000);
+}
+
+function updatePresUI(){
+  const active = Object.keys(presenceMap);
+  document.getElementById('pres-count').textContent = active.length;
+  document.getElementById('pres-names').textContent = active.join(', ');
+}
+
+// ── MESSAGES ─────────────────────────────────────────
+window.sendMsg = function(){
   const inp = document.getElementById('mi');
   const txt = inp.value.trim();
-  if (!txt || !roomRef) return;
-  inp.value = '';
-  inp.style.height = 'auto';
+  if (!txt || !client || !client.connected) return;
+  inp.value = ''; inp.style.height = 'auto';
 
-  const ts  = Date.now();
-  const key = ts + '_' + Math.random().toString(36).slice(2, 8);
-
-  const msg = { text: txt, name: myName, ts };
-  roomRef.get('msgs').get(key).put(msg);
+  const msg = { text: txt, name: myName, ts: Date.now() };
+  // Show immediately
+  renderMsg(msg, 'local-' + msg.ts);
+  // Send
+  client.publish(topic, JSON.stringify(msg), { qos: 0 });
 };
 
-function renderMsg(msg, key) {
+const rendered = new Set();
+function handleMsg(msg){
+  if (!msg || !msg.text || !msg.name) return;
+  // Skip own messages (already shown via sendMsg)
+  if (msg.name === myName) return;
+  renderMsg(msg, msg.name + '_' + msg.ts);
+}
+
+function renderMsg(msg, key){
+  if (rendered.has(key)) return;
+  rendered.add(key);
+
   const msgs = document.getElementById('msgs');
   document.getElementById('empty')?.remove();
 
-  if (document.querySelector(`[data-key="${key}"]`)) return;
-
   const isMe = msg.name === myName;
-  const time = new Date(msg.ts).toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' });
+  const time = new Date(msg.ts).toLocaleTimeString('pl-PL',{hour:'2-digit',minute:'2-digit'});
 
   const w = document.createElement('div');
   w.className = 'mw ' + (isMe ? 'me' : 'them');
-  w.dataset.key = key;
-  w.dataset.ts  = String(msg.ts);
-
+  w.dataset.ts = String(msg.ts);
   w.innerHTML =
     `<div class="meta">${esc(msg.name)} <span class="mtime">· ${time}</span></div>` +
-    `<div class="mb">${esc(msg.text).replace(/\n/g, '<br>')}</div>`;
+    `<div class="mb">${esc(msg.text).replace(/\n/g,'<br>')}</div>`;
 
-  // Insert sorted
-  let inserted = false;
-  const existing = msgs.querySelectorAll('.mw[data-ts]');
-  for (const el of existing) {
-    if (Number(el.dataset.ts) > msg.ts) {
-      msgs.insertBefore(w, el);
-      inserted = true;
-      break;
-    }
-  }
-  if (!inserted) msgs.appendChild(w);
+  msgs.appendChild(w);
   msgs.scrollTop = msgs.scrollHeight;
 }
 
-// ── PRESENCE ─────────────────────────────────────────
-function startPresence() {
-  function beat() {
-    if (!presenceRef) return;
-    presenceRef.get(myName).put({ name: myName, ts: Date.now() });
-  }
-  beat();
-  presenceInterval = setInterval(beat, 4000);
-
-  // Listen to all presence entries
-  presenceRef.map().on((data, key) => {
-    if (!data || !data.name) return;
-    presenceMap[data.name] = data.ts;
-    updateParticipants();
-  });
-
-  // Prune stale every 5s
-  setInterval(updateParticipants, 5000);
-}
-
-function updateParticipants() {
-  const now = Date.now();
-  const active = Object.entries(presenceMap)
-    .filter(([, ts]) => now - ts < PRESENCE_TTL)
-    .map(([name]) => name);
-
-  document.getElementById('part-count').textContent = active.length;
-  document.getElementById('part-names').textContent = active.join(', ');
-}
-
 // ── EXIT ─────────────────────────────────────────────
-window.exitVault = function () {
-  clearInterval(presenceInterval);
-  if (presenceRef && myName) presenceRef.get(myName).put(null);
-  if (roomRef) { roomRef.off(); roomRef = null; }
-  presenceRef = null;
-  seen.clear();
+window.exitVault = function(){
+  clearInterval(presInterval);
+  announcePresence(false);
+  if (client){ client.end(true); client = null; }
+  rendered.clear();
   presenceMap = {};
-  gun = null;
+  setDot('');
 
   document.getElementById('msgs').innerHTML =
     '<div class="empty" id="empty"><div class="empty-i">💬</div><div class="empty-t">kanał gotowy — wyślij pierwszą wiadomość</div></div>';
   document.getElementById('chat').classList.remove('on');
   document.getElementById('login').classList.remove('hide');
-  document.getElementById('part-count').textContent = '0';
-  document.getElementById('part-names').textContent = '';
-
-  const btn = document.getElementById('btn-go');
-  btn.textContent = 'Wejdź do kanału';
-  btn.disabled = false;
+  document.getElementById('pres-count').textContent = '1';
+  document.getElementById('pres-names').textContent = '';
   document.getElementById('pi').value = '';
   document.getElementById('ferr').textContent = '';
-  setDot('');
 };
 
-// ── INPUT ────────────────────────────────────────────
-function setupInput() {
+// ── INPUT ─────────────────────────────────────────────
+function setupInput(){
   const ta = document.getElementById('mi');
   ta.addEventListener('input', () => {
     ta.style.height = 'auto';
-    ta.style.height = Math.min(ta.scrollHeight, 110) + 'px';
+    ta.style.height = Math.min(ta.scrollHeight,110)+'px';
   });
   ta.addEventListener('keydown', e => {
-    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); }
+    if (e.key==='Enter' && !e.shiftKey){ e.preventDefault(); sendMsg(); }
   });
   setTimeout(() => ta.focus(), 300);
 }
-
-['ri', 'pi', 'ni'].forEach(id => {
+['ri','pi','ni'].forEach(id => {
   document.getElementById(id).addEventListener('keydown', e => {
-    if (e.key === 'Enter') enterVault();
+    if (e.key==='Enter') enterVault();
   });
 });
 </script>
